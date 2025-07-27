@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEXT to SQL LLM</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-database"></i> TEXT2Query</h1>
+        
+        <!-- Added Database Selection -->
+        <div class="database-selector">
+            <label for="database-select"><i class="fas fa-database"></i> Select Database:</label>
+            <select id="database-select">
+                <option value="" disabled selected>Loading databases...</option>
+            </select>
+            <span id="current-db" class="db-indicator">
+                <i class="fas fa-exclamation-circle"></i> No database selected
+            </span>
+        </div>
+        
+        <div class="query-box">
+            <label for="queryInput"><i class="fas fa-question-circle"></i> Enter your question in ENGLISH:</label>
+            <textarea id="queryInput" placeholder="e.g., Show me all customers from New York ordered by name"></textarea>
+            <button id="submitQuery">
+                <i class="fas fa-play"></i> Generate SQL & Execute
+            </button>
+        </div>
+        
+        <div class="results-section">
+            <div class="sql-display">
+                <h3><i class="fas fa-code"></i> Generated SQL</h3>
+                <div id="sqlOutput">SQL query will appear here</div>
+            </div>
+            
+            <div class="data-display">
+                <h3><i class="fas fa-table"></i> Query Results</h3>
+                <div id="dataOutput">Results will appear here</div>
+                <button id="downloadExcel" disabled>
+                    <i class="fas fa-file-excel"></i> Download as Excel
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>
