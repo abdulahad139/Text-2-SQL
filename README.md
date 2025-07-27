@@ -1,4 +1,4 @@
-# TEXT-to-SQL LLM Converter
+# TEXT-to-SQL Converter
 
 ## Overview
 Natural language interface for MySQL databases using LLMs
