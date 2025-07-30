@@ -44,12 +44,12 @@ class DatabaseManager:
         
         return str(schema)
 
-    def _get_sample_data(self, cursor, table: str, limit: int = 3) -> List[dict]:
+    def _get_sample_data(self, cursor, table: str, limit: int = 3):
         """Get sample table data"""
         cursor.execute(f"SELECT * FROM {table} LIMIT {limit}")
         return cursor.fetchall()
 
-    def execute_query(self, query: str, params: tuple = None) -> Union[pd.DataFrame, None]:
+    def execute_query(self, query: str, params: tuple = None):
         """Safe query execution with pandas DataFrame return"""
         try:
             # Basic query type filtering
