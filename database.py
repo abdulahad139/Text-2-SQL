@@ -24,7 +24,7 @@ class DatabaseManager:
             return [db['Database'] for db in cursor.fetchall() 
                    if db['Database'] not in ('sys', 'information_schema', 'mysql', 'performance_schema')]
 
-    def get_schema_info(self) -> str:
+    def get_schema_info(self):
         """Extract schema information for LLM prompts"""
         if not self.current_db:
             raise ValueError("No database selected")
@@ -33,14 +33,12 @@ class DatabaseManager:
         with self.connection.cursor() as cursor:
             cursor.execute("SHOW TABLES")
             tables = [table[f"Tables_in_{self.current_db}"] for table in cursor.fetchall()]
-            
             for table in tables:
                 cursor.execute(f"SHOW CREATE TABLE {table}")
                 schema["tables"][table] = {
                     "structure": cursor.fetchone()['Create Table'],
                     "sample": self._get_sample_data(cursor, table)
                 }
-        
         return str(schema)
 
     def _get_sample_data(self, cursor, table: str, limit: int = 3):
@@ -60,19 +58,16 @@ class DatabaseManager:
 
             with self.connection.cursor() as cursor:
                 cursor.execute(query, params or ())
-                
                 if query_type == 'SELECT':
                     return pd.DataFrame(cursor.fetchall())
                 self.connection.commit()
                 return None
-                
         except Exception as e:
             self.connection.rollback()
             raise ValueError(f"Query execution failed: {str(e)}")
 
     def close(self):
-        """Clean up connections"""
-        if hasattr(self, 'connection') and self.connection:
+        if hasattr(self,'connection') and self.connection:
             self.connection.close()
 
 # Global instance (initially without specific database)
