@@ -52,10 +52,17 @@ class DatabaseManager:
     def execute_query(self, query: str, params: tuple = None) -> Union[pd.DataFrame, None]:
         """Safe query execution with pandas DataFrame return"""
         try:
+            # Basic query type filtering
+            dangerous_keywords = ['DROP', 'TRUNCATE', 'ALTER', 'DELETE']
+            query_type = query.strip().split()[0].upper()
+
+            if any(danger in query.upper() for danger in dangerous_keywords):
+                raise ValueError(f"Blocked dangerous query type: '{query_type}'")
+
             with self.connection.cursor() as cursor:
                 cursor.execute(query, params or ())
                 
-                if query.lstrip()[:6].upper() == 'SELECT':
+                if query_type == 'SELECT':
                     return pd.DataFrame(cursor.fetchall())
                 self.connection.commit()
                 return None
