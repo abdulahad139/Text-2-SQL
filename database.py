@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import os
 from typing import Union, Dict, List, Optional
 
-# Load environment variables
 load_dotenv()
 
 class DatabaseManager:
