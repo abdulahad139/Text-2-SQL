@@ -50,7 +50,7 @@ class DatabaseManager:
         """Safe query execution with pandas DataFrame return"""
         try:
             # Basic query type filtering
-            dangerous_keywords = ['DROP', 'TRUNCATE', 'ALTER', 'DELETE']
+            dangerous_keywords = ['DROP','TRUNCATE','ALTER','DELETE']
             query_type = query.strip().split()[0].upper()
 
             if any(danger in query.upper() for danger in dangerous_keywords):
